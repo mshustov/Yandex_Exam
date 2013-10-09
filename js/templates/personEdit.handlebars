@@ -1,0 +1,36 @@
+<div class="person">
+    <div class="person_photo__full">
+        {{#if photo}}
+            <img class="person_photo__avatar" src="{{photo}}" alt="фото:{{fname}} {{lname}}">
+        {{else}}
+            <img class="person_photo__avatar" src="img/default.png" alt="default photo">
+        {{/if}}
+    </div>
+    <div class="person_info_container">
+        <div class="person_info_detailed_control">
+            <a href="#edit/{{id}}/" class="person_info_control person_info_control__edit" title="Редактировать"></a>
+            <a href="#" class="person_info_control person_info_control__delete" title="Удалить"></a>
+            <a href="#" class="person_info_control person_info_control__close" title="Закрыть"></a>
+        </div>
+        <div class="person_info person_info__detailed">
+            <header>
+                <h3 class="person_info_name">{{fname}} {{lname}}</h3>
+                <span class="person_info_city">{{city_id}}</span>
+                <span class="person_info_role">{{role_id}}</span>
+                <span class="person_info_age">{{dateOfBirth}}</span>
+            </header>
+            <p class="person_info_about">{{{parseAbout about}}}</p>
+            {{#if socnetwork }}
+                <ul class="person_socnetwork">
+                    {{#each socnetwork}}
+                        {{#each this}}
+                            {{#if this}}
+                                <li class="person_socnetwork_icon"><a class="person_socnetwork_icon_link person_socnetwork_icon_link__{{@key}}" href="{{this}}" title="{{this}}"></a></li>
+                            {{/if}}
+                        {{/each}}
+                    {{/each}}
+                </ul>
+            {{/if}}
+        </div>
+    </div>
+</div>
