@@ -1,0 +1,50 @@
+<form id="editPerson">
+    <div class="block_photo__full">
+        {{#if photo}}
+            <img class="block_photo__avatar" src="{{photo}}" alt="фото:{{fname}} {{lname}}">
+        {{else}}
+            <img class="block_photo__avatar" src="css/img/default.png" alt="default photo">
+        {{/if}}
+        <label class="block_edit">
+            <span class="block_edit_label__photo"></span>
+            <input class="block_edit_input block_edit__photo" name="photo" value="{{photo}}" type="text">
+        </label>
+    </div>
+    <div class="block_info block_info__editable">
+        <header>
+            <label class="block_edit">
+                <span class="block_edit_label__text">Имя</span>
+                <input class="block_edit_input" name="fname" value="{{fname}}" type="text">
+                <span class="block_edit_message hide"></span>
+            </label>
+            <label class="block_edit">
+                <span class="block_edit_label__text">Фамилия</span>
+                <input class="block_edit_input" name="lname" value="{{lname}}" type="text">
+                <span class="block_edit_message hide"></span>
+            </label>
+            <label class="block_edit">
+                <span class="block_edit_label__text">Город</span>
+                <input class="block_edit_input" name="city" value="{{city}}" type="text">
+                <span class="block_edit_message hide"></span>
+            </label>
+            <input class="block_edit_input" name="role" value="{{role}}" type="hidden">
+        </header>
+        <p class="block_edit block_edit__textarea"><textarea class="block_edit_input block_edit_input__textarea" rows="15" name="about">{{about}}</textarea></p>
+        <ul class="block_links">
+            {{#each socnetwork}}
+                <li class="block_link__vert">
+                    {{#each this}}
+                        <label class="block_edit">
+                            <span class="block_link_icon block_link_icon__{{@key}}"></span>
+                            <input class="block_edit_input block_edit__wide"  name="socnetwork[{{@index}}].{{@key}}" value="{{this}}" type="text">
+                        </label>
+                    {{/each}}
+                </li>
+            {{/each}}
+        </ul>
+        <ul class="block_link_control block_link_control__editable">
+            <li class="block_link"><a href="#" class="block_link_icon  block_link_icon__save" title="Сохранить"></a></li>
+            <li class="block_link"><a href="#" class="block_link_icon  block_link_icon__close" title="Закрыть"></a></li>
+        </ul>
+    </div>
+</form>

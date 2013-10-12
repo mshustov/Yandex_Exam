@@ -1,0 +1,39 @@
+<div class="block">
+    <div class="block_photo__full">
+        {{#if photo}}
+            <img class="block_photo__avatar" src="{{photo}}" alt="фото:{{fname}} {{lname}}">
+        {{else}}
+            <img class="block_photo__avatar" src="img/default.png" alt="default photo">
+        {{/if}}
+    </div>
+    <div class="block_info">
+        <header>
+            <h3 class="block_header">{{fname}} <span class="first_letter__red">{{lname}}</span></h3>
+            <span class="block_info__city">{{city}}</span>
+        </header>
+        <p class="block_info_about">{{{parseAbout about}}}</p>
+        {{#if socnetwork }}
+            <ul class="block_links">
+                {{#each socnetwork}}
+                    {{#each this}}
+                        {{#if this}}
+                            <li class="block_link"><a class="block_link_icon block_link_icon__{{@key}}" href="{{this}}" title="{{this}}"></a></li>
+                        {{/if}}
+                    {{/each}}
+                {{/each}}
+            </ul>
+        {{/if}}
+        {{#if lectures }}
+            <ul class="block_links">
+                {{#each lectures}}
+                    <li class="block_link__vert"><a class="block_link_text" href="{{url}}" title="{{name}}">{{name}}</a></li>
+                {{/each}}
+            </ul>
+        {{/if}}
+    </div>
+    <ul class="block_link_control">
+        <a href="/edit/{{id}}/" class="block_link_icon block_link_icon__edit" title="Редактировать"></a>
+        <a href="#" class="block_link_icon block_link_icon__delete" title="Удалить"></a>
+        <a href="#" class="block_link_icon block_link_icon__close" title="Закрыть"></a>
+    </ul>
+</div>
