@@ -1,0 +1,81 @@
+@import "zenecherub";
+//------------variables section--------------
+$lightgray:#f0f0ed;
+//------------ main -------------------------
+body{
+  background: $lightgray;
+}
+#content{
+  max-width: 1080px; /* 180px*6 */
+  margin: 0 auto;
+}
+.person{
+  display: inline-block;
+  position: relative;
+  @include box-sizing(border-box);
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
+
+  vertical-align: middle;
+  &:hover .person_info{
+    bottom: 50px;
+    @include trasition(all, 0.6s, ease-in-out);
+  }
+}
+.person_info{
+  position: relative;
+  @include box-sizing(border-box);
+  width: 100%;
+  height: 50px;
+  bottom: 0px;
+  padding: 5px 10px;
+  z-index: 1;
+
+  color: white;
+  text-shadow:0 1px 1px black;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+////////////////// переделать с фото фиксированного размера
+.person_photo__full{
+  width: 100%;
+  height: 100%;
+  img{
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+.person_photo__left,.person_photo__right{
+  img{
+    max-width: 25%;
+  }
+}
+// person profile control
+.person_info_control{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.person_info_control__read,.person_info_control__edit,.person_info_control__delete{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  &:hover{
+    @include opacity(.5)
+  }
+}
+.person_info_control__read{
+  background: url("img/icon-show_w.png") no-repeat;
+}.person_info_control__edit{
+  background: url("img/icon-edit_w.png") no-repeat;
+}.person_info_control__delete{
+  background: url("img/icon-delete_w.png") no-repeat;
+}
+// размернутая инфа
+.person_detailed{
+
+
+}

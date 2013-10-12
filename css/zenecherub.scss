@@ -1,0 +1,133 @@
+/*****
+SCSS CSS 3 Property Maxin v 0.1
+
+by Dele O
+*******/
+
+@mixin rounded($radius: 10px) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+
+@mixin roundedSides($topLeft, $topRight, $bottomRight, $bottomLeft) {
+  -moz-border-radius-topleft: $topLeft;
+  -moz-border-radius-topright: $topRight;
+  -moz-border-radius-bottomright: $bottomRight;
+  -moz-border-radius-bottomleft: $bottomLeft;
+  border-top-left-radius:$topLeft;
+  border-top-right-radius: $topRight;
+  border-bottom-right-radius: $bottomRight;
+  border-bottom-left-radius: $bottomLeft;
+}
+
+
+@mixin shadow( $off-y, $off-x, $blur, $color){
+  -moz-box-shadow: $off-y $off-x $blur $color; /* FF3.5+ */
+  -webkit-box-shadow:  $off-y $off-x $blur $color; /* Saf3.0+, Chrome */
+  box-shadow:  $off-y $off-x $blur $color; /* Opera 10.5, IE9 */
+}
+
+
+
+@mixin gradient($baseColor, $toColor){
+  background-color:$baseColor;
+  background-image: -moz-linear-gradient(top, $baseColor, $toColor); /* FF3.6 */
+  background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, $baseColor),color-stop(1, $toColor));  /* Saf4+, Chrome */
+  background-image: linear-gradient(top,$baseColor, $toColor);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='$baseColor', EndColorStr='$toColor');   /* IE6â��IE9 */
+}
+
+
+@mixin trasition($property, $durations:0.3s, $function: ease-out){
+  -moz-transition: $property $durations $function;
+  -o-transition: $property $durations $function;
+  -webkit-transition: $property $durations $function;
+  transition: $property $durations $function;
+}
+
+
+@mixin transform($scale, $rotate, $trans-x, $trans-y, $skew-x, $skew-y){
+  -moz-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew(skew-x, skew-y);
+  -webkit-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew(skew-x, skew-y);
+  -o-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew(skew-x, skew-y);
+  -ms-transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew(skew-x, skew-y);
+  transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew(skew-x, skew-y);
+
+}
+// ------------------------ added by bon -----------------------
+@mixin box-shadow($shadow1, $shadow2:false, $shadow3:false, $shadow4:false, $shadow5:false) {
+  $params: $shadow1;
+  @if $shadow2
+  { $params: $shadow1, $shadow2; }
+  @if $shadow3 != false
+  { $params: $shadow1, $shadow2, $shadow3; }
+  @if $shadow4 != false
+  { $params: $shadow1, $shadow2, $shadow3, $shadow4; }
+  @if $shadow5 != false
+  { $params: $shadow1, $shadow2, $shadow3, $shadow4, $shadow5; }
+  -webkit-box-shadow: $params;
+  -moz-box-shadow: $params;
+  box-shadow: $params;
+}
+@mixin gradients($from, $to){
+/* fallback/image non-cover color */
+  background-color: $from;
+/* Firefox 3.6+ */
+  background-image: -moz-linear-gradient($from,$to);
+/* Safari 4+, Chrome 1+ */
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
+/* Safari 5.1+, Chrome 10+ */
+  background-image: -webkit-linear-gradient($from, $to);
+/* Opera 11.10+ */
+  background-image: -o-linear-gradient($from, $to);
+}
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin opacity($level) {
+  filter: alpha(opacity = $level * 100);
+  opacity: $level;
+}
+
+@mixin border-image($image, $top, $right, $bottom, $left, $repeat: stretch) {
+  -webkit-border-image: url($image) $top $right $bottom $left $repeat;
+  -moz-border-image: url($image) $top $right $bottom $left $repeat;
+  -ms-border-image: url($image) $top $right $bottom $left $repeat;
+  -o-border-image: url($image) $top $right $bottom $left $repeat;
+  border-width: #{$top}px #{$right}px #{$bottom}px #{$left}px;
+/*	border-image: url($image) $top $right $bottom $left $repeat; removed since Chrome's implementation is fundamentally broken */
+}
+
+/* useful for semi-transparent borders which can have bleed-through. See https://developer.mozilla.org/en/CSS/background-clip */
+@mixin backgroundclip($val: padding-box) {
+  -webkit-background-clip: $val;
+  -moz-background-clip: $val;
+}
+
+@mixin box-sizing($box-sizing:border-box){
+  box-sizing: $box-sizing;
+  -moz-box-sizing: $box-sizing;
+  -webkit-box-sizing: $box-sizing;
+}
+
+/*для посказки с стиле комикса*/
+@mixin hint($type:top,$color:lightgray,$height:20px,$top:100%,$left:10%){
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    top: $top;
+    left: $left;
+    border-#{$type}: $height solid $color; /* граница сверху элемента */
+    border-#{$type}-color: $color; /* наследуем значение родительского элемента */
+    border-left: $height solid transparent; /* левая граница элемента */
+    border-right: $height solid transparent;
+  }
+}

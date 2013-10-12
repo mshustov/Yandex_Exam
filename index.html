@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="css/resetStyle.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <title></title>
+    <script type="text/x-handlebars-template" id="personTemplate">
+        <div class="person_photo__left">
+            {{#if photo}}
+            <img src="{{photo}}" rel="users photo">
+            {{else}}
+            <!--    <img src="img/default.png" rel="default photo"> -->
+            {{/if}}
+        </div>
+        <div class="person_info">
+            <header>
+                <h3 class="person_info_name">{{fname}} {{lname}}</h3>
+                <span class="person_info_city">{{city_id}}</span>
+                <span class="person_info_role">{{role_id}}</span><span class="person_info_age">{{dateOfBirth}}</span>
+            </header>
+            <div class="person_info_about">{{about}}</div>
+            {{#if socnetwork }}
+            {{#each socnetwork}}
+            <a href="{{link}}" title="{{name}}">{{link}}</a>
+            {{/each}}
+            {{/if}}
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="personShort">
+        <div class="person_photo__full">
+            {{#if photo}}
+            <img src="{{photo}}" rel="users photo">
+            {{else}}
+            <img src="img/default.png" rel="default photo">
+            {{/if}}
+        </div>
+        <div class="person_info">
+            <div class="person_info_name">{{fname}} {{lname}}</div>
+            <div class="person_info_control">
+                <div class="person_info_control__read"></div>
+                <div class="person_info_control__edit"></div>
+                <div class="person_info_control__delete"></div>
+            </div>
+        </div>
+    </script>
+</head>
+<body>
+<header>
+</header>
+<section id="content"></section>
+</body>
+
+<script src="js/allStudents.js"></script>
+
+<script data-main="js/main" src="js/require.js"></script>
+
+</html>
