@@ -1,10 +1,10 @@
-define(["backbone","jquery","handlebars","underscore","common","templates"],
+define('views/PersonShort',["backbone","jquery","handlebars","underscore","common","templates"],
     function(Backbone,$,Handlebars,_,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
             tagName: 'section',
             className: 'block_wrapper',
-            template: Handlebars.compile($('#personShort').html()),//tmpl['personShort.hbs'],
+            template: tmpl['personShort.hbs'],
             _timer:null,
             events:{
                 "click .block_link_text__read"  :"onLink",

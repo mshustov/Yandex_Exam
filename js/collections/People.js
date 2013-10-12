@@ -1,31 +1,27 @@
-define(["backbone","models/Person","backbone.localStorage"],
+define('collections/People',["backbone","models/Person","backbone.localStorage"],
     function(Backbone,PersonModel) {
+        "use strict";
         return Backbone.Collection.extend({
             model: PersonModel,
-            localStorage: new Backbone.LocalStorage('shri'),
+            localStorage: new Backbone.LocalStorage('peoples'),
 
-            // Filter down the list of all todo items that are finished.
-            completed: function() {
-                return this.filter(function( todo ) {
-                    return todo.get('completed');
+            // вернуть список лиц заданной роли
+            getRole: function(role) {
+                return this.filter(function( person ) {
+                    return person.get('role') === role;
                 });
             },
-            // Filter down the list to only todo items that are still not finished.
-            remaining: function() {
-                // apply allowsus to define the context of this within our function scope
-                return this.without.apply( this, this.completed() );
-            },
-
-            // We keep the Todos in sequential order, despite being saved by unordered
-            // GUID in the database. This generates the next order number for new items.
-            nextOrder: function() {
-                if ( !this.length ) {
-                    return 1;
-                }
-                return this.last().get('order') + 1;
-            },
-            comparator: function( todo ) {
-                return todo.get('order');
+            getShort: function(role) {
+                var result={};
+                this.each(function( person ) {
+                    if (person.get('role')===role){
+                        result[person.get('id')]={
+                            name:person.get('fname') + '  '+ person.get('lname'),
+                            photo:person.get('photo')
+                        };
+                    }
+                });
+                return result;
             }
         });
 });

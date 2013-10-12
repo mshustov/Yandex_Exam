@@ -1,16 +1,27 @@
-define(["backbone","views/Person"],
+define('views/People',["backbone","views/PersonShort"],
     function(Backbone,PersonView) {
+        "use strict";
         return Backbone.View.extend({
             tagName:'section',
             className:'content',
 
-            initialize:function(){
-                //без id событие не срабатывает!!
+            initialize:function(attrs){
                 this.collection.on('add',this.addOne,this);
+                this.role=attrs.route;
             },
 
             render:function(){
-                this.collection.each(this.addOne,this);
+                var fragment = document.createDocumentFragment();
+                this.collection.each(function(person){
+                    if (person.get('role')===this.role){
+                        var onePersonView = new PersonView({
+                            model:person
+                        })
+                        fragment.appendChild(onePersonView.render().el);
+                    }
+                },this);
+
+                this.$el.append(fragment);
                 return this
             },
 

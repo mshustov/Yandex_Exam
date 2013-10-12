@@ -119,7 +119,7 @@
         try {
 
             switch (method) {
-                case "read":
+                case "readPerson":
                     resp = model.id != undefined ? store.find(model) : store.findAll();
                     break;
                 case "create":

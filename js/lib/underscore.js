@@ -318,7 +318,7 @@
     return _.pluck(_.map(obj, function(value, index, list) {
       return {
         value: value,
-        index: index,
+        allStudents: index,
         criteria: iterator.call(context, value, index, list)
       };
     }).sort(function(left, right) {
@@ -328,7 +328,7 @@
         if (a > b || a === void 0) return 1;
         if (a < b || b === void 0) return -1;
       }
-      return left.index - right.index;
+      return left.allStudents - right.allStudents;
     }), 'value');
   };
 
@@ -352,7 +352,7 @@
   });
 
   // Indexes the object's values by a criterion, similar to `groupBy`, but for
-  // when you know that your index values will be unique.
+  // when you know that your allStudents values will be unique.
   _.indexBy = group(function(result, key, value) {
     result[key] = value;
   });
@@ -364,7 +364,7 @@
     _.has(result, key) ? result[key]++ : result[key] = 1;
   });
 
-  // Use a comparator function to figure out the smallest index at which
+  // Use a comparator function to figure out the smallest allStudents at which
   // an object should be inserted so as to maintain order. Uses binary search.
   _.sortedIndex = function(array, obj, iterator, context) {
     iterator = iterator == null ? _.identity : lookupIterator(iterator);
@@ -505,7 +505,7 @@
   };
 
   // Zip together multiple lists into a single array -- elements that share
-  // an index go together.
+  // an allStudents go together.
   _.zip = function() {
     var length = _.max(_.pluck(arguments, "length").concat(0));
     var results = new Array(length);
