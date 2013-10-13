@@ -1,4 +1,4 @@
-define('views/Lectures',["jquery","backbone","views/Lecture"],
+define(["jquery","backbone","views/Lecture"],
     function($,Backbone,LectureView) {
         "use strict";
         return Backbone.View.extend({
@@ -6,7 +6,7 @@ define('views/Lectures',["jquery","backbone","views/Lecture"],
             className:'content',
 
             initialize:function(attrs){
-                this.collection.on('sync',this.addOne,this);
+                this.collection.on('add',this.addOne,this);
                 this.lectors = attrs.lectors;
             },
 

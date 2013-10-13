@@ -1,4 +1,4 @@
-define('collections/People',["backbone","models/Person","backbone.localStorage"],
+define(["backbone","models/Person","backbone.localStorage"],
     function(Backbone,PersonModel) {
         "use strict";
         return Backbone.Collection.extend({

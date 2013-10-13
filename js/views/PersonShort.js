@@ -1,4 +1,4 @@
-define('views/PersonShort',["backbone","jquery","handlebars","underscore","common","templates"],
+define(["backbone","jquery","handlebars","underscore","common","templates"],
     function(Backbone,$,Handlebars,_,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
@@ -7,8 +7,6 @@ define('views/PersonShort',["backbone","jquery","handlebars","underscore","commo
             template: tmpl['personShort'],
             _timer:null,
             events:{
-                "click .block_link_text__read"  :"onLink",
-                "click .block_photo__link"      :"onLink",
                 "mouseenter .block_short"       :"onMouseenter",
                 "mouseleave .block_short"       :"onMouseleave"
             },
@@ -17,7 +15,6 @@ define('views/PersonShort',["backbone","jquery","handlebars","underscore","commo
                 this.model.on('sync',this.render,this);
             },
             render: function() {
-                // TODO проверка заливки фото - по окончании замена на дефаулт
                 this.$el.html( this.template( this.model.toJSON() ));
                 return this;
             },
@@ -27,10 +24,6 @@ define('views/PersonShort',["backbone","jquery","handlebars","underscore","commo
             close:function () {
                 $(this.el).unbind();
                 $(this.el).empty();
-            },
-            onLink:function(e){
-               // common.navigate(e.currentTarget.getAttribute('href'));
-               // return false
             },
             onMouseenter:function(e){
                 this.$el.find('.block_photo__link').addClass('block_link_move');

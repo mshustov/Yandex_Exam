@@ -1,4 +1,4 @@
-define('models/Lecture',["backbone"],
+define(["backbone"],
     function(Backbone) {
         "use strict";
         return Backbone.Model.extend({
@@ -10,9 +10,7 @@ define('models/Lecture',["backbone"],
                     {"slides":""},
                     {"video":""}
                 ]
-
             },
-
             validate: function(attrs) {
                 var errors = {};
 

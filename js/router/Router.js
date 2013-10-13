@@ -1,4 +1,4 @@
-define("router/Router",["backbone","collections/People","views/People","views/PersonDetailed","views/editPerson",
+define(["backbone","collections/People","views/People","views/PersonDetailed","views/editPerson",
     "collections/Lectures","views/Lectures","views/editLecture",
     "common","data/shri","templates"],
     function(Backbone,PeopleCollection,PeopleView,PersonDetailedView,EditPersonView,
@@ -7,30 +7,34 @@ define("router/Router",["backbone","collections/People","views/People","views/Pe
         "use strict";
         return Backbone.Router.extend({
             routes:{
-                "lectures"              :"allLectures",
+                "lectures/"             :"allLectures",
                 "lectures/edit/:id/"    :"editLecture",
                 ":route/new/"           :"addNew",
-                ":person"               :"allPersons",
+                ":lectors/"             :"allPersons",
                 ":person/read/:id/"     :"readPerson",
                 ":person/edit/:id/"     :"editPerson",
                 ""                      :"goDefault",
                 "*404"                  :"go404"
             },
+
             initialize:function(){
                 this.initLectures();
                 this.initPersons();
+                this.bind('route',function(){
+                    common.showActTab();
+                })
             },
             goDefault:function(){
-                Backbone.history.navigate('',true);
-                common.hideModal();
+                Backbone.history.navigate('#students/',true);
             },
             go404:function(){
+                common.vent.trigger('hideModal');
                 var url = Backbone.history.fragment;
                 $('#content').html( tmpl['error_404']( {url:url} ));
                 Backbone.history.navigate('404',{replace:true});
             },
             initLectures:function(callback){
-                console.log('INIT LECTURES');
+                console.log('fetch Lectures from localStorage');
                 this.lectures = new LecturesCollection();
                 //если в local storage нет обеъкта, то грузим из переменной
                 if (!localStorage['lectures']){
@@ -38,11 +42,10 @@ define("router/Router",["backbone","collections/People","views/People","views/Pe
                         this.lectures.create(lecture);
                     },this);
                 }
-                //TODO переделать на нормальный фетч. как внизу
                 this.lectures.fetch();
             },
             initPersons:function(callback){
-                console.log('INIT PERSON');
+                console.log('fetch Person from localStorage');
                 this.people = new PeopleCollection();
                 //если в local storage нет обеъкта, то грузим из переменной
                 if (!localStorage['peoples']){
@@ -52,33 +55,29 @@ define("router/Router",["backbone","collections/People","views/People","views/Pe
                 };
                 this.people.fetch();
             },
-
             allPersons:function(route){
-                console.log('allPersons',arguments)
-
-                if (route!=="students" && route!=='lectors'){
+                //если роут неизвестный, то отправим на 404
+                if (!common.validPersonClass(route)){
                     return this.go404();
                 }
-                this.route = route;
-                if (this.route==="lectures"){return}
-                this.peopleView = new PeopleView({
-                    collection:this.people,
-                    role:this.route
-                });
-                $('#content').html(this.peopleView.render().el);
+                var self=this;
+                this.people.fetch({success:function(){
+                    common.vent.trigger('hideModal');
+                    self.peopleView = new PeopleView({
+                        collection:self.people,
+                        role:route
+                    });
+                    $('#content').html(self.peopleView.render().el);
+                }});
             },
             readPerson:function(route,id){
-                console.log('readPerson',arguments);
-
                     this.person = this.people.get(id);
-                    if (!this.person){
-                        //throw new Error('нет пользователя с таким ID')
+                    if (!this.person || !common.validPersonClass(route)){
                         return this.go404();
                     }
                     var role = this.person.get("role") || route;
 
                     if (this.personDetailedView) this.personDetailedView.close();
-
                     this.personDetailedView = new PersonDetailedView({
                         model:this.person,
                         role :role
@@ -86,16 +85,12 @@ define("router/Router",["backbone","collections/People","views/People","views/Pe
                     common.vent.trigger('showModal',this.personDetailedView.render().el);
             },
             editPerson:function(route,id){
-                console.log('editPerson =',route,id);
-
                     this.person =(id)? this.people.get(id):this.people.create();
-                    //TODO Error нет такого пользоватетя
-                    if (!this.person){
+                    if (!this.person || !common.validPersonClass(route)){
                         return this.go404()
                     }
                     var role = this.person.get("role") || route;
 
-                    //TODO проверить удаление!!
                     if (this.personEditView) this.personEditView.close();
                     this.personEditView = new EditPersonView({
                         model:this.person,
@@ -103,21 +98,20 @@ define("router/Router",["backbone","collections/People","views/People","views/Pe
                     });
                     common.vent.trigger('showModal',this.personEditView.render().el);
             },
-            // TODO menu click - Backbone.history!!!
             allLectures:function(){
-                console.log('allLectures');
-                var lectors = this.people.getShort('lectors');
-
-                this.lecturesView = new LecturesView({
-                        collection:this.lectures,
+                var self = this;
+                this.lectures.fetch({success:function(){
+                    common.vent.trigger('hideModal');
+                    var lectors = self.people.getShort('lectors');
+                    self.lecturesView = new LecturesView({
+                        collection:self.lectures,
                         lectors:lectors
                     });
-                $('#content').html(this.lecturesView.render().el);
+                    $('#content').html(self.lecturesView.render().el);
+                }});
             },
 
             editLecture:function(id){
-                console.log('editLecture =',id);
-
                     this.lecture =(id)? this.lectures.get(id):this.lectures.create();
                     if (!this.lecture){
                         return this.go404()
@@ -128,11 +122,9 @@ define("router/Router",["backbone","collections/People","views/People","views/Pe
                         lectors:this.people.getShort('lectors')
                     });
                     common.vent.trigger('showModal',this.lectureEditView.render().el);
-
             },
             addNew:function(route){
-                console.log('new',arguments);
-                if (route === "students" || route === "lectors"){
+                if (common.validPersonClass(route)){
                     this.editPerson(route);
                 }
                 if (route === "lectures"){

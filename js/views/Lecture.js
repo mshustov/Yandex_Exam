@@ -1,4 +1,4 @@
-define('views/Lecture',["backbone","jquery","handlebars","underscore","common","templates"],
+define(["backbone","jquery","handlebars","underscore","common","templates"],
     function(Backbone,$,Handlebars,_,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
@@ -20,6 +20,7 @@ define('views/Lecture',["backbone","jquery","handlebars","underscore","common","
                 this.lectors = attrs.lectors;
             },
             render: function() {
+                //по id получаем данные о лекторе из переданного массива lectors
                 var id = this.model.get('lector');
                 var renderData = this.template($.extend({},this.model.toJSON(),this.lectors[id]));
 

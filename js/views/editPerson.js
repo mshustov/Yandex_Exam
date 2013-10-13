@@ -1,4 +1,4 @@
-define('views/editPerson',["backbone","handlebars","underscore","lib/form2js","common","templates"],
+define(["backbone","handlebars","underscore","lib/form2js","common","templates"],
     function(Backbone,Handlebars,_,form2js,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
@@ -16,7 +16,7 @@ define('views/editPerson',["backbone","handlebars","underscore","lib/form2js","c
                 this.model.on('destroy',this.onClose,this);
                 this.model.on('sync',this.render,this);
                 this.model.on('invalid',common.showFormError,this);
-
+                //запишем какую роль (students, lectors и т.д.) класса Person надо отобразить
                 this.role = { role : attrs.role };
             },
             render: function() {
@@ -30,10 +30,11 @@ define('views/editPerson',["backbone","handlebars","underscore","lib/form2js","c
             },
             onClose:function(){
                 this.close();
-                common.hideModal();
+                common.vent.trigger('hideModal');
                 return false;
             },
             onKeyDown:function(e){
+                //остановим всплытие событий при вводе в input, чтобы отменить переход
                 if (e.keyCode === common.Key.BACKSPACE || e.keyCode === common.Key.ESCAPE ){
                     e.stopPropagation();
                 }

@@ -24,10 +24,7 @@
  define("main",["jquery","backbone","router/Router"],
      function($,Backbone,Router) {
          "use strict";
-     try {
-         var app = new Router();
+         var App = new Router();
          Backbone.history.start();
-     } catch (e) {
-        console.log(e.message);
-     }
+
  })

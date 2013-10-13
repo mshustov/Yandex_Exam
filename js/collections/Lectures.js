@@ -1,4 +1,4 @@
-define('collections/Lectures',["backbone","models/Lecture","backbone.localStorage"],
+define(["backbone","models/Lecture","backbone.localStorage"],
     function(Backbone,LectureModel) {
         "use strict";
         return Backbone.Collection.extend({
