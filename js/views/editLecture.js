@@ -19,20 +19,20 @@ define(["backbone","handlebars","underscore","lib/form2js","common","templates"]
 
                 this.lectors =attrs.lectors;
             },
+
             render: function() {
                 //по id получаем данные о лекторе из переданного массива lectors
                 var id = this.model.get('lector');
                 var renderData = this.template($.extend({},this.model.toJSON(),this.lectors[id],{lectors:this.lectors}));
                 this.$el.html(renderData);
                 this.$el.find('select[name="lector"]').val(this.model.get('lector'));
-
                 return this;
             },
             close:function () {
                 $(this.el).unbind();
                 $(this.el).empty();
             },
-            onClose:function(e){
+            onClose:function(){
                 this.close();
                 common.vent.trigger('hideModal');
                 return false;
