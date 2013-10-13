@@ -11,7 +11,7 @@
             <h3 class="block_header">{{fname}} <span class="first_letter__red">{{lname}}</span></h3>
             <span class="block_info__city">{{city}}</span>
         </header>
-        <p class="block_info_about">{{{parseAbout about}}}</p>
+        <p class="block_info_about">{{about}}</p>
         {{#if socnetwork }}
             <ul class="block_links">
                 {{#each socnetwork}}
@@ -32,7 +32,7 @@
         {{/if}}
     </div>
     <ul class="block_link_control">
-        <a href="/edit/{{id}}/" class="block_link_icon block_link_icon__edit" title="Редактировать"></a>
+        <a href="#{{role}}/edit/{{id}}/" class="block_link_icon block_link_icon__edit" title="Редактировать"></a>
         <a href="#" class="block_link_icon block_link_icon__delete" title="Удалить"></a>
         <a href="#" class="block_link_icon block_link_icon__close" title="Закрыть"></a>
     </ul>

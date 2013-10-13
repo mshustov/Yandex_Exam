@@ -4,7 +4,7 @@ define('views/editLecture',["backbone","handlebars","underscore","lib/form2js","
         return Backbone.View.extend({
             tagName: 'section',
             className: 'popup',
-            template:tmpl['lectureEdit.hbs'],
+            template:tmpl['lectureEdit'],
             events:{
                 "click .block_link_icon__close" :"onClose",
                 "click .block_link_icon__save"  :"onSave",
@@ -14,7 +14,7 @@ define('views/editLecture',["backbone","handlebars","underscore","lib/form2js","
             },
             initialize:function(attrs){
                 this.model.on('destroy',this.onClose,this);
-                this.model.on('change',this.render,this);
+                this.model.on('sync',this.render,this);
                 this.model.on('invalid',common.showFormError,this);
 
                 this.lectors =attrs.lectors;

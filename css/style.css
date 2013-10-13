@@ -57,6 +57,9 @@ body {
   text-align: center;
   text-decoration: none; }
 
+.main_menu_item__active {
+  color: red; }
+
 .modal_popup {
   position: fixed;
   left: 0;
@@ -358,3 +361,19 @@ body {
   height: 80px;
   margin: 20px auto;
   background: url("img/add.png") no-repeat; }
+
+.error_header {
+  text-align: center;
+  font-size: 1.6em;
+  margin: 20px 0 10px;
+  font-weight: bold; }
+
+.error_msg {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 20px 0 10px;
+  font-weight: bold; }
+
+.error_msg_banner {
+  font-size: 1.2em;
+  display: inline-block; }

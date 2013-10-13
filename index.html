@@ -5,53 +5,33 @@
     <link rel="stylesheet" href="css/resetStyle.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <title></title>
-    <script type="text/x-handlebars-template" id="personTemplate">
-        <div class="person_photo__left">
-            {{#if photo}}
-            <img src="{{photo}}" rel="users photo">
-            {{else}}
-            <!--    <img src="img/default.png" rel="default photo"> -->
-            {{/if}}
-        </div>
-        <div class="person_info">
-            <header>
-                <h3 class="person_info_name">{{fname}} {{lname}}</h3>
-                <span class="person_info_city">{{city_id}}</span>
-                <span class="person_info_role">{{role_id}}</span><span class="person_info_age">{{dateOfBirth}}</span>
-            </header>
-            <div class="person_info_about">{{about}}</div>
-            {{#if socnetwork }}
-            {{#each socnetwork}}
-            <a href="{{link}}" title="{{name}}">{{link}}</a>
-            {{/each}}
-            {{/if}}
-        </div>
-    </script>
-    <script type="text/x-handlebars-template" id="personShort">
-        <div class="person_photo__full">
-            {{#if photo}}
-            <img src="{{photo}}" rel="users photo">
-            {{else}}
-            <img src="img/default.png" rel="default photo">
-            {{/if}}
-        </div>
-        <div class="person_info">
-            <div class="person_info_name">{{fname}} {{lname}}</div>
-            <div class="person_info_control">
-                <div class="person_info_control__read"></div>
-                <div class="person_info_control__edit"></div>
-                <div class="person_info_control__delete"></div>
+    <script id="error_404" type="application/template">
+        <section class="content">
+            <div class="block">
+                <p> Страница, запрошеная по адресу </p>
+                <p> {{url}} </p>
+                <p>не существует</p>
             </div>
-        </div>
+        </section>
     </script>
 </head>
 <body>
-<header>
+<header class="menu content">
+    <nav class="main_menu">
+        <ul class="main_menu_list">
+            <li class="main_menu_item"><a class="main_menu_item__link" href="#students">Студенты</a></li>
+            <li class="main_menu_item"><a class="main_menu_item__link" href="#lectures">Лекции</a></li>
+            <li class="main_menu_item"><a class="main_menu_item__link" href="#lectors">Преподаватели</a></li>
+        </ul>
+    </nav>
 </header>
+<section id ="modal" class="modal_popup hide"></section>
 <section id="content"></section>
+<div class="block_add">
+    <a class="add_new" href="/new/" title="Добавить"></a>
+</div>
 </body>
 
-<script src="js/allStudents.js"></script>
 
 <script data-main="js/main" src="js/require.js"></script>
 

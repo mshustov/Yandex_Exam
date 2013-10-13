@@ -1,5 +1,5 @@
 <figure class="block block_short">
-    <a href="/read/{{id}}/" class="block_photo__link">
+    <a href="#{{role}}/read/{{id}}/" class="block_photo__link">
         {{#if photo}}
             <img class="block_photo__short" src="{{photo}}" alt="фото:{{fname}} {{lname}}">
         {{else}}
@@ -11,7 +11,7 @@
             <h3 class="block_header"> {{fname}} <span class="first_letter__red">{{lname}}</span></h3>
             <span class="block_info__city">{{city}}</span>
         </header>
-        <a href="/read/{{id}}/" class="block_link_text block_link_text__read" title="подробнее">подробнее...</a>
+        <a href="#{{role}}/read/{{id}}/" class="block_link_text block_link_text__read" title="подробнее">подробнее...</a>
         {{#if socnetwork }}
             <ul class="block_links">
                 {{#each socnetwork}}

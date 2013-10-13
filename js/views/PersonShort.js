@@ -4,7 +4,7 @@ define('views/PersonShort',["backbone","jquery","handlebars","underscore","commo
         return Backbone.View.extend({
             tagName: 'section',
             className: 'block_wrapper',
-            template: tmpl['personShort.hbs'],
+            template: tmpl['personShort'],
             _timer:null,
             events:{
                 "click .block_link_text__read"  :"onLink",
@@ -14,7 +14,7 @@ define('views/PersonShort',["backbone","jquery","handlebars","underscore","commo
             },
             initialize:function(){
                 this.model.on('destroy',this.unrender,this);
-                this.model.on('change',this.render,this);
+                this.model.on('sync',this.render,this);
             },
             render: function() {
                 // TODO проверка заливки фото - по окончании замена на дефаулт
@@ -29,8 +29,8 @@ define('views/PersonShort',["backbone","jquery","handlebars","underscore","commo
                 $(this.el).empty();
             },
             onLink:function(e){
-                common.navigate(e.currentTarget.getAttribute('href'));
-                return false
+               // common.navigate(e.currentTarget.getAttribute('href'));
+               // return false
             },
             onMouseenter:function(e){
                 this.$el.find('.block_photo__link').addClass('block_link_move');

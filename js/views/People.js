@@ -6,8 +6,8 @@ define('views/People',["backbone","views/PersonShort"],
             className:'content',
 
             initialize:function(attrs){
-                this.collection.on('add',this.addOne,this);
-                this.role=attrs.route;
+                this.collection.on('sync',this.addOne,this);
+                this.role=attrs.role;
             },
 
             render:function(){

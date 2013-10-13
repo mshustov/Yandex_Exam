@@ -1,81 +1,361 @@
 @import "zenecherub";
 //------------variables section--------------
+$width:200px;
+// colot variables
 $lightgray:#f0f0ed;
+$lightlightgray:#fafafa;
+$darkgray:#333;
+h3{
+  font-size: 1.25em;
+}
 //------------ main -------------------------
+html,body{
+  min-height: 100%;
+  font-family: Arial;
+}
 body{
-  background: $lightgray;
+  background: $lightlightgray;
+  background-image:linear-gradient(90deg, rgba(255,0,0,.5) 1px, transparent 1px),linear-gradient(rgba(238,233,233,.7) 1px, transparent 1px);
+  background-size:100px 100px,60px 60px;
+  background-repeat: repeat-y, repeat;
+  background-position:right,  left ;
 }
-#content{
-  max-width: 1080px; /* 180px*6 */
-  margin: 0 auto;
-}
-.person{
-  display: inline-block;
-  position: relative;
-  @include box-sizing(border-box);
-  width: 180px;
-  height: 180px;
-  overflow: hidden;
 
-  vertical-align: middle;
-  &:hover .person_info{
-    bottom: 50px;
-    @include trasition(all, 0.6s, ease-in-out);
+.content{
+  max-width: $width*5; /* пусть максимум 4 колонок*/
+  margin: 0 auto 20px;
+  @include clearfix;
+}
+.first_letter__red{
+  display: inline-block;
+  &:first-letter{
+    color: red;
   }
 }
-.person_info{
-  position: relative;
-  @include box-sizing(border-box);
-  width: 100%;
-  height: 50px;
-  bottom: 0px;
-  padding: 5px 10px;
-  z-index: 1;
+//delete cross on IE input
+::-ms-clear{
+  display: none;
+}
+// ----------------- main menu ----------------
+.menu{
+  margin: 0 auto 25px;
+  background: #ffffff;
+  @include shadow(1px,1px,2px,#f0f0ed - #222222)
+}
+.main_menu_list{
 
-  color: white;
-  text-shadow:0 1px 1px black;
-  background-color: rgba(0, 0, 0, 0.5);
+}
+.main_menu_item{
+  display: inline-block;
+
+}
+.main_menu_item__link{
+  display: block;
+  padding: 15px 25px;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+}
+.main_menu_item__active{
+  color: red;
 }
 
-////////////////// переделать с фото фиксированного размера
-.person_photo__full{
+//---------------------  popup  ------------------
+
+.modal_popup{
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  img{
-    width: 100%;
-    min-height: 100%;
+  background: rgba(0,0,0,.7);
+  text-align: center;
+  z-index: 9999;
+  overflow: auto;
+  &:after{
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle;
+    content: ''
   }
+}
+.popup {
+  display: inline-block;
+  position: relative;
+  //max-width: 60%;
+  padding: 20px;
+  border: 5px solid #fff;
+  border-radius: 15px;
+  box-shadow: inset 0 2px 2px 2px rgba(0,0,0,.4);
+  background: #fff;
+  vertical-align: middle
+}
+//----------------------- addPerson -----------------------
+
+/************************************************************/
+/*
+/*              Lecture
+/*
+/***********************************************************/
+.block{
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+.block__shadow{
+  margin-bottom: 10px;
+  @include shadow(1px,1px,2px,#f0f0ed - #222222);
 }
 
-.person_photo__left,.person_photo__right{
-  img{
-    max-width: 25%;
-  }
+.block_photo__full{
+  display: inline-block;
+  vertical-align: top;
+  @include shadow(1px,0px,1px,rgba(240,240,237,.8));
 }
-// person profile control
-.person_info_control{
+.block_photo__avatar{
+  display: block;
+  width: $width;
+  height: $width;
+}
+//----------------------- block_short  ----------------------
+.block_short{
+  display: block;
+  position: relative;
+  overflow: hidden;
+  float:left;
+}
+.block_photo__short{
+  @include box-sizing(border-box);
+  width: 200px;
+  height: 200px;
+  vertical-align: bottom;
+}
+
+.block_photo__link{
+  display: block;
+  @include transition(all,.5s,ease-out);
+  @include transform-short(translateX(0));
+}
+
+.block_info__short{
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 0;
+  left: 0;
+  @include box-sizing(border-box);
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  opacity: 0;
+  @include transition(all,.5s,ease-out);
+  @include transform-short(translateX(-100%));
 }
-.person_info_control__read,.person_info_control__edit,.person_info_control__delete{
+
+.block_link_move{
+  @include transform-short(translateX(100%));
+  @include transition-delay(.6s);
+}
+.block_info_move{
+  opacity: 1;
+  @include transform-short(translateX(0));
+  @include transition-delay(.6s);
+}
+// -----------------------  block_info  ---------------------
+.block_info_container{
+  overflow: hidden;
+}
+.block_info{
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  padding: 10px 10px 0//8px 5px 5px 20px;
+}
+.block_info_about{
+  margin: 10px 0;
+  width: 400px;
+}
+.block_info__city{
+  color: gray;
+  font-size: 0.6875em;
+}
+.block_detailed{
+  position: absolute;
+  width: 3*$width;
+  height: 100%;
+  z-index: 2;
+  background: white;
+}
+
+.block_header{
+  font-size: 1.15em;
+}
+.block_header__link{
+  color: black;
+  text-decoration: none;
+}
+.block_subheader{
+  margin: 5px 0;
+  color: $darkgray;
+}
+
+.block_link{
+  display: inline-block;
+  vertical-align: middle;
+}
+.block_link__vert{
+  display: block;
+  text-align: left;
+  margin: 3px 0;
+}
+
+.block_link_control{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 10px;
+  @include transition(opacity, .5s, ease-in-out);
+  @include transition-delay(.5s);
+}
+
+.block_link_icon{
   display: inline-block;
   width: 20px;
   height: 20px;
-  cursor: pointer;
+  margin: 2px;
+  color: gray;
+  vertical-align: top;
+}
+.block_link_text{
+  display: block;
+  margin: 10px 0 ;
+  line-height: 20px;
+  color: #333;
+}
+.block_link_text__read{
+  display: block;
+  margin: 10px 0 ;
+  line-height: 20px;
+  color: #333;
   &:hover{
-    @include opacity(.5)
+    color: gray;
+    text-decoration: none;
   }
 }
-.person_info_control__read{
-  background: url("img/icon-show_w.png") no-repeat;
-}.person_info_control__edit{
-  background: url("img/icon-edit_w.png") no-repeat;
-}.person_info_control__delete{
-  background: url("img/icon-delete_w.png") no-repeat;
+// ---------- control icons --------------
+.block_link_icon__edit{
+  background: url("img/icon-edit.png") no-repeat;
 }
-// размернутая инфа
-.person_detailed{
+.block_link_icon__delete{
+  background: url("img/icon-trash.png") no-repeat;
+}
+.block_link_icon__close{
+  background: url("img/icon-close.png") no-repeat;
+}
+.block_link_icon__save{
+  background: url("img/icon-save.png") no-repeat;
+}
 
+.block_link_icon__video{
+  background: url("img/icon-video.png") no-repeat;
+}
+.block_link_icon__slides{
+  background: url("img/icon-slides.png") no-repeat;
+}
 
+.block_link_icon__vk{
+  background: url("img/vk.png") no-repeat;
+}
+.block_link_icon__facebook{
+  background: url("img/facebook.png") no-repeat;
+}
+.block_link_icon__github{
+  background: url("img/github.png") no-repeat;
+}
+.block_link_icon__yaru{
+  background: url("img/yandex_icon.png") no-repeat;
+}
+//---------------------- block control ---------------
+.hide{
+  display: none;
+}
+//----------------------- block edit -----------------
+.block_edit{
+  display: block;
+  margin: 2px 0;
+  border-bottom: 1px solid $lightgray;
+}
+.block_edit__textarea{
+  padding: 5px;
+  border: 1px solid $lightgray;
+  border-radius: 2px;
+  margin: 10px 0;
+}
+.block_edit_input{
+  border:none;
+  outline: none;
+}
+.block_edit_input__textarea{
+  width: 100%;
+}
+.block_info__editable{
+  padding: 0 10px;
+}
+.block_link_control__editable{
+  margin: 0;
+}
+.block_edit_label__text{
+  display: inline-block;
+  width: 70px;
+  padding: 0 5px;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+.block_edit_label__photo{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  background: url("img/icon-avatar.png") no-repeat;
+}
+.block_edit_message{
+  display: block;
+  color: red;
+  font-size: .75em;
+  padding-left: 70px;
+}
+
+.block_edit__wide{
+  //display: inline-block;
+  width: 300px;
+}
+.block_edit__error{
+  border-color: red;
+}
+.block_edit__focused{
+  border-color: gray;
+}
+// ------------------- add ----------------
+.add_new{
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 20px auto;
+  background: url("img/add.png") no-repeat ;
+}
+// ------------------- error --------------
+.error_header{
+  text-align: center;
+  font-size: 1.6em;
+  margin: 20px 0 10px;
+  font-weight: bold;
+}
+.error_msg{
+  text-align: center;
+  font-size: 1.2em;
+  margin: 20px 0 10px;
+  font-weight: bold;
+}
+.error_msg_banner{
+  font-size: 1.2em;
+  display: inline-block;
 }

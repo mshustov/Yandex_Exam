@@ -24,10 +24,10 @@
  define("main",["jquery","backbone","router/Router"],
      function($,Backbone,Router) {
          "use strict";
-     //try {
+     try {
          var app = new Router();
          Backbone.history.start();
-     //} catch (e) {
-       // console.log(e);
-     //}
+     } catch (e) {
+        console.log(e.message);
+     }
  })

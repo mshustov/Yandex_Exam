@@ -12,18 +12,13 @@ define('common',["jquery","underscore","backbone","handlebars"],
 
             //модуль управления модальным окном
             modal:$('#modal'),
-
-            navigate:function(url,silent){
-                var silent = silent || ''
-                var href = '#' + Backbone.history.fragment.split('/')[0];
-                if (url) {href += url;}
-                Backbone.history.navigate(href,true);
+            getRoot:function(){
+                return Backbone.history.fragment.split('/')[0];
             },
-
             hideModal:function(){
                 this.modal.addClass('hide').off('.detailed');
                 $(document).off('.detailed');
-                this.navigate();
+                Backbone.history.navigate(this.getRoot(), {replace: true});
             },
             showModal:function(content){
                 var self = this;
@@ -35,6 +30,7 @@ define('common',["jquery","underscore","backbone","handlebars"],
                     self.hideModal();
                 });
                 $(document).on('keydown.detailed', function(e){
+                    //скрываем модальное окно по ESC или BACKSPACE
                     if (e.keyCode!=self.Key.ESCAPE && e.keyCode!=self.Key.BACKSPACE){return}
                     self.hideModal();
                 });
@@ -55,18 +51,13 @@ define('common',["jquery","underscore","backbone","handlebars"],
                 this.vent.on('hideModal',this.hideModal,this);
 
                 $('.add_new').on('click',function(e){
-                    self.navigate(e.currentTarget.getAttribute('href'));
+                    var hash=e.currentTarget.getAttribute('href');
+                    Backbone.history.navigate(self.getRoot()+hash, true);
                     return false
                 });
 
-                // хелпер для обработки переносов строк в {{about}}
-                Handlebars.registerHelper('parseAbout', function(about) {
-                    if (!about) return
-                    return about.replace(/[\n]+/gim,'<br>');
-                });
             }
         };
-
         common.initialize();
 
         return common

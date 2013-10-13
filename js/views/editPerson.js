@@ -4,7 +4,7 @@ define('views/editPerson',["backbone","handlebars","underscore","lib/form2js","c
         return Backbone.View.extend({
             tagName: 'section',
             className: 'popup',
-            template:tmpl['personEdit.hbs'],
+            template:tmpl['personEdit'],
             events:{
                 "click .block_link_icon__close"     :"onClose",
                 "click .block_link_icon__save"      :"onSave",
@@ -14,7 +14,7 @@ define('views/editPerson',["backbone","handlebars","underscore","lib/form2js","c
             },
             initialize:function(attrs){
                 this.model.on('destroy',this.onClose,this);
-                this.model.on('change',this.render,this);
+                this.model.on('sync',this.render,this);
                 this.model.on('invalid',common.showFormError,this);
 
                 this.role = { role : attrs.role };
