@@ -1,4 +1,4 @@
-define('views/People',["backbone","views/PersonShort"],
+define(["backbone","views/PersonShort"],
     function(Backbone,PersonView) {
         "use strict";
         return Backbone.View.extend({
@@ -6,11 +6,12 @@ define('views/People',["backbone","views/PersonShort"],
             className:'content',
 
             initialize:function(attrs){
-                this.collection.on('sync',this.addOne,this);
+                this.collection.on('add',this.addOne,this);
                 this.role=attrs.role;
             },
 
             render:function(){
+                //рендерится только определенная роль (students,lectors)
                 var fragment = document.createDocumentFragment();
                 this.collection.each(function(person){
                     if (person.get('role')===this.role){

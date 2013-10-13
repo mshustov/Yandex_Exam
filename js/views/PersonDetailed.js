@@ -1,4 +1,4 @@
-define('views/PersonDetailed',["backbone","handlebars","underscore","common","templates"],
+define(["backbone","handlebars","underscore","common","templates"],
     function(Backbone,Handlebars,_,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
@@ -30,7 +30,7 @@ define('views/PersonDetailed',["backbone","handlebars","underscore","common","te
             },
             onClose:function(){
                 this.close();
-                common.hideModal();
+                common.vent.trigger('hideModal');
                 return false;
             }
         });

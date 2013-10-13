@@ -1,4 +1,4 @@
-define('views/editLecture',["backbone","handlebars","underscore","lib/form2js","common","templates"],
+define(["backbone","handlebars","underscore","lib/form2js","common","templates"],
     function(Backbone,Handlebars,_,form2js,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
@@ -20,6 +20,7 @@ define('views/editLecture',["backbone","handlebars","underscore","lib/form2js","
                 this.lectors =attrs.lectors;
             },
             render: function() {
+                //по id получаем данные о лекторе из переданного массива lectors
                 var id = this.model.get('lector');
                 var renderData = this.template($.extend({},this.model.toJSON(),this.lectors[id],{lectors:this.lectors}));
                 this.$el.html(renderData);
@@ -33,10 +34,11 @@ define('views/editLecture',["backbone","handlebars","underscore","lib/form2js","
             },
             onClose:function(e){
                 this.close();
-                common.hideModal();
+                common.vent.trigger('hideModal');
                 return false;
             },
             onKeyDown:function(e){
+                //остановим всплытие событий при вводе в input, чтобы отменить переход
                 if (e.keyCode === common.Key.BACKSPACE || e.keyCode === common.Key.ESCAPE ){
                     e.stopPropagation();
                 }

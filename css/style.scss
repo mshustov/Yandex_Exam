@@ -52,12 +52,13 @@ body{
 .main_menu_item__link{
   display: block;
   padding: 15px 25px;
+  color: gray;
   font-size: 18px;
   text-align: center;
   text-decoration: none;
 }
 .main_menu_item__active{
-  color: red;
+  text-decoration: underline;
 }
 
 //---------------------  popup  ------------------
@@ -134,7 +135,7 @@ body{
 
 .block_photo__link{
   display: block;
-  @include transition(all,.5s,ease-out);
+  @include transition(all,.4s,ease-out);
   @include transform-short(translateX(0));
 }
 
@@ -147,7 +148,7 @@ body{
   height: 100%;
   padding: 15px;
   opacity: 0;
-  @include transition(all,.5s,ease-out);
+  @include transition(all,.4s,ease-out);
   @include transform-short(translateX(-100%));
 }
 
@@ -276,7 +277,7 @@ body{
 }
 //---------------------- block control ---------------
 .hide{
-  display: none;
+  display: none !important;
 }
 //----------------------- block edit -----------------
 .block_edit{
@@ -358,4 +359,5 @@ body{
 .error_msg_banner{
   font-size: 1.2em;
   display: inline-block;
+  color: lightcoral;
 }
