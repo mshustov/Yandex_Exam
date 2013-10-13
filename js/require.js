@@ -123,7 +123,7 @@ var requirejs, require, define;
     }
 
     //Similar to Function.prototype.bind, but the 'this' object is specified
-    //first, since it is easier to read/figure out what 'this' will be.
+    //first, since it is easier to readPerson/figure out what 'this' will be.
     function bind(obj, fn) {
         return function () {
             return fn.apply(obj, arguments);
@@ -1837,7 +1837,7 @@ var requirejs, require, define;
             if (node.attachEvent &&
                 //Check if node.attachEvent is artificially added by custom script or
                 //natively supported by browser
-                //read https://github.com/jrburke/requirejs/issues/187
+                //readPerson https://github.com/jrburke/requirejs/issues/187
                 //if we can NOT find [native code] then it must NOT natively supported.
                 //in IE8, node.attachEvent does not have toString()
                 //Note the test for "[native code" with no closing brace, see:

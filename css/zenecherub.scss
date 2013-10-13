@@ -10,6 +10,23 @@ by Dele O
   -webkit-border-radius: $radius;
 }
 
+@mixin placeholder-color($color:lightgray) {
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color:    $color;
+  }
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    $color;
+  }
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    $color;
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+       color:    $color;
+     }
+  &::-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    $color;
+  }
+}
 
 @mixin roundedSides($topLeft, $topRight, $bottomRight, $bottomLeft) {
   -moz-border-radius-topleft: $topLeft;
@@ -28,7 +45,11 @@ by Dele O
   -webkit-box-shadow:  $off-y $off-x $blur $color; /* Saf3.0+, Chrome */
   box-shadow:  $off-y $off-x $blur $color; /* Opera 10.5, IE9 */
 }
-
+@mixin shadow_none(){
+  -moz-box-shadow: none; /* FF3.5+ */
+  -webkit-box-shadow: none; /* Saf3.0+, Chrome */
+  box-shadow:  none; /* Opera 10.5, IE9 */
+}
 
 
 @mixin gradient($baseColor, $toColor){
@@ -40,11 +61,16 @@ by Dele O
 }
 
 
-@mixin trasition($property, $durations:0.3s, $function: ease-out){
+@mixin transition($property, $durations:0.3s, $function: ease-out){
   -moz-transition: $property $durations $function;
   -o-transition: $property $durations $function;
   -webkit-transition: $property $durations $function;
   transition: $property $durations $function;
+}
+
+@mixin transition-delay($delay:1s){
+  transition-delay: $delay;
+  -webkit-transition-delay: $delay; /* Safari */
 }
 
 
@@ -56,6 +82,14 @@ by Dele O
   transform: scale($scale) rotate($rotate) translate($trans-x, $trans-y) skew(skew-x, skew-y);
 
 }
+@mixin transform-short($param){
+  -moz-transform: $param;
+  -webkit-transform: $param;
+  -o-transform: $param;
+  -ms-transform: $param;
+  transform: $param;
+}
+
 // ------------------------ added by bon -----------------------
 @mixin box-shadow($shadow1, $shadow2:false, $shadow3:false, $shadow4:false, $shadow5:false) {
   $params: $shadow1;

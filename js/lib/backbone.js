@@ -439,7 +439,7 @@
         model.trigger('sync', model, resp, options);
       };
       wrapError(this, options);
-      return this.sync('read', this, options);
+      return this.sync('readPerson', this, options);
     },
 
     // Set a hash of model attributes, and sync the model to the server.
@@ -649,7 +649,7 @@
         this.models.splice(index, 1);
         this.length--;
         if (!options.silent) {
-          options.index = index;
+          options.allStudents = index;
           model.trigger('remove', model, this, options);
         }
         this._removeReference(model);
@@ -689,7 +689,7 @@
         } else if (options.add) {
           toAdd.push(model);
 
-          // Listen to added models' events, and index models for lookup by
+          // Listen to added models' events, and allStudents models for lookup by
           // `id` and by `cid`.
           model.on('all', this._onModelEvent, this);
           this._byId[model.cid] = model;
@@ -786,7 +786,7 @@
       return this._byId[obj.id != null ? obj.id : obj.cid || obj];
     },
 
-    // Get the model at the given index.
+    // Get the model at the given allStudents.
     at: function(index) {
       return this.models[index];
     },
@@ -827,7 +827,7 @@
       return this;
     },
 
-    // Figure out the smallest index at which a model should be inserted so as
+    // Figure out the smallest allStudents at which a model should be inserted so as
     // to maintain order.
     sortedIndex: function(model, value, context) {
       value || (value = this.comparator);
@@ -857,7 +857,7 @@
         collection.trigger('sync', collection, resp, options);
       };
       wrapError(this, options);
-      return this.sync('read', this, options);
+      return this.sync('readPerson', this, options);
     },
 
     // Create a new instance of a model in this collection. Add the model to the
@@ -1040,7 +1040,7 @@
     // *{"event selector": "callback"}*
     //
     //     {
-    //       'mousedown .title':  'edit',
+    //       'mousedown .title':  'editPerson',
     //       'click .button':     'save'
     //       'click .open':       function(e) { ... }
     //     }
@@ -1124,7 +1124,7 @@
   // as well as all requests with the body as `application/x-www-form-urlencoded`
   // instead of `application/json` with the model in a param named `model`.
   // Useful when interfacing with server-side languages like **PHP** that make
-  // it difficult to read the body of `PUT` requests.
+  // it difficult to readPerson the body of `PUT` requests.
   Backbone.sync = function(method, model, options) {
     var type = methodMap[method];
 
@@ -1193,7 +1193,7 @@
     'update': 'PUT',
     'patch':  'PATCH',
     'delete': 'DELETE',
-    'read':   'GET'
+    "readPerson":   'GET'
   };
 
   // Set the default implementation of `Backbone.ajax` to proxy through to `$`.

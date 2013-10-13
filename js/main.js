@@ -4,7 +4,9 @@
          'underscore': 'lib/underscore',
          'backbone': 'lib/backbone',
          'backbone.localStorage': 'lib/backbone.localStorage',
-         'handlebars': 'lib/handlebars'
+         'handlebars': 'lib/handlebars',
+         'templates' : 'templates/templates',
+         'form2js': 'lib/form2js'
      },
      shim: {
          'jquery': {
@@ -16,28 +18,16 @@
          'backbone': { exports: 'Backbone', deps: ['underscore', 'jquery'] },
          'backbone.localStorage': { deps: ['backbone'] },
          'handlebars': { exports: 'Handlebars'}
-
      }
  });
 
- define("main",["jquery","backbone","router/Router",'collections/People','views/App'],
-     function($,Backbone,Router,PeopleCollection,AppView) {
-
-    // try {
-         new Router();
+ define("main",["jquery","backbone","router/Router"],
+     function($,Backbone,Router) {
+         "use strict";
+     try {
+         var app = new Router();
          Backbone.history.start();
-         //глобальный объект чтобы удобно было смотреть
-         var people = new PeopleCollection();
-        if (!localStorage['shri']){
-            _.each(allStudents,function(student){
-                people.create(student);
-            });
-        }
-
-         people.fetch().then(function(){
-            new AppView({collection:people});
-         });
-     //} catch (e) {
-    //     console.log(e);
-     //}
+     } catch (e) {
+        console.log(e.message);
+     }
  })

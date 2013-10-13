@@ -1,23 +1,35 @@
-define(["backbone","views/Day"],
-    function(Backbone,DayView) {
+define('views/Lectures',["jquery","backbone","views/Lecture"],
+    function($,Backbone,LectureView) {
         "use strict";
         return Backbone.View.extend({
             tagName:'section',
             className:'content',
 
-            initialize:function(){
-                //без id событие не срабатывает!!
-                this.collection.on('add',this.addOne,this);
+            initialize:function(attrs){
+                this.collection.on('sync',this.addOne,this);
+                this.lectors = attrs.lectors;
             },
 
             render:function(){
-                this.collection.each(this.addOne,this);
+                var fragment = document.createDocumentFragment();
+                this.collection.each(function(lecture){
+                    var oneLectureView = new LectureView({
+                        model:lecture,
+                        lectors:this.lectors
+                    })
+                    fragment.appendChild(oneLectureView.render().el);
+                },this);
+
+                this.$el.append(fragment);
                 return this
             },
 
-            addOne:function(person){
-                var day = new DayView({model:person});
-                this.$el.append(day.render().el);
+            addOne:function(lecture){
+                var oneLectureView = new LectureView({
+                    model:lecture,
+                    lectors:this.lectors
+                });
+                this.$el.append(oneLectureView.render().el);
             }
         });
 });

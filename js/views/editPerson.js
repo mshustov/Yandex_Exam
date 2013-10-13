@@ -1,64 +1,55 @@
-define(["backbone","handlebars","underscore","common"],
-    function(Backbone,Handlebars,_,common) {
+define('views/editPerson',["backbone","handlebars","underscore","lib/form2js","common","templates"],
+    function(Backbone,Handlebars,_,form2js,common,tmpl) {
         "use strict";
         return Backbone.View.extend({
             tagName: 'section',
             className: 'popup',
-            template: Handlebars.compile( $('#personTemplate').html() ),
+            template:tmpl['personEdit'],
             events:{
-                "click .person_info_control__edit"  :"onEdit",
-                "click .person_info_control__delete":"onDelete",
-                "click .person_info_control__close" :"onClose",
-                "keydown .person_edit_input"        :"onKeyDown",
-                "focus .person_edit_input"          :"onFocus",
-                "blur .person_edit_input"           :"onBlur"
+                "click .block_link_icon__close"     :"onClose",
+                "click .block_link_icon__save"      :"onSave",
+                "keydown .block_edit_input"         :"onKeyDown",
+                "focus .block_edit_input"           :"onFocus",
+                "blur .block_edit_input"            :"onBlur"
             },
-            initialize:function(){
+            initialize:function(attrs){
                 this.model.on('destroy',this.onClose,this);
-                this.model.on('change',this.render,this);
+                this.model.on('sync',this.render,this);
+                this.model.on('invalid',common.showFormError,this);
+
+                this.role = { role : attrs.role };
             },
             render: function() {
-                // TODO проверка заливки фото - по окончании замена на дефаулт
-                this.$el.html( this.template( this.model.toJSON() ));
+                var renderData = this.template($.extend({},this.model.toJSON(),this.role));
+                this.$el.html(renderData);
                 return this;
             },
             close:function () {
                 $(this.el).unbind();
                 $(this.el).empty();
             },
-            onEdit:function(){
-                this.$el.find('.person_readable').addClass('hide');
-                this.$el.find('.person_editable').removeClass('hide');
-                return false;
-            },
-            onDelete:function(){
-                //метод что удаляется модель и синхронизирует удаление с сервером
-                this.model.destroy();
-                //TODO убрать сделать удаление по
-                this.onClose();
-                return false;
-            },
-
-            onClose:function(e){
-                //TODO нужны???????
-                this.unbind();
-                this.remove();
-                //this.el.empty();
-                common.vent.trigger('hideModal',e);
+            onClose:function(){
+                this.close();
+                common.hideModal();
                 return false;
             },
             onKeyDown:function(e){
-                //TODO стоит ли убирать ESC???
-                //TODO или вынести на глобальный уровень проверку для всех полей input, но это затратнее при всплытии
                 if (e.keyCode === common.Key.BACKSPACE || e.keyCode === common.Key.ESCAPE ){
-                    event.stopPropagation();
+                    e.stopPropagation();
                 }
             },
             onFocus:function(e){
-                $(e.target).closest('.person_edit').addClass('person_edit__focused')
+                $(e.target).closest('.block_edit').addClass('block_edit__focused');
             },
             onBlur:function(e){
-                $(e.target).closest('.person_edit').removeClass('person_edit__focused')
+                $(e.target).closest('.block_edit').removeClass('block_edit__focused');
+                var newVal = $.trim( $(e.target).val() );
+                $(e.target).val(newVal);
+            },
+            onSave:function(e){
+                var formData = form2js('editPerson', '.', false);
+                this.model.save(formData);
+                return false
             }
         });
 });

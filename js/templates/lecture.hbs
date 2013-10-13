@@ -1,0 +1,30 @@
+<div class="block block__shadow">
+    <div class="block_info_container">
+        <div class="block_photo__full">
+            {{#if photo}}
+                <img class="block_photo__avatar" src="{{photo}}" alt="фото:{{lector}}">
+            {{else}}
+                <img class="block_photo__avatar" src="css/img/default.png" alt="default photo">
+            {{/if}}
+        </div>
+        <div class="block_info">
+            <header>
+                <h3 class ="block_header"><a class="block_header__link" href="{{links.0.video}}" title="Запись лекции">{{title}}</a></h3>
+            </header>
+            <h5 class="block_subheader">{{name}}</h5>
+            <ul class="block_links">
+                {{#each links}}
+                    {{#each this}}
+                        {{#if this}}
+                            <li class="block_link"><a class="block_link_icon block_link_icon__{{@key}}" href="{{this}}" title="{{this}}"></a></li>
+                        {{/if}}
+                    {{/each}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <ul class="block_link_control">
+        <li class="block_link"><a href="#lectures/edit/{{id}}/" class="block_link_icon  block_link_icon__edit" title="Редактировать"></a></li>
+        <li class="block_link"><a href="#lectures/delete/{{id}}" class="block_link_icon  block_link_icon__delete" title="Удалить"></a></li>
+    </ul>
+</div>

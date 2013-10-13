@@ -1,0 +1,27 @@
+<figure class="block block_short">
+    <a href="#{{role}}/read/{{id}}/" class="block_photo__link">
+        {{#if photo}}
+            <img class="block_photo__short" src="{{photo}}" alt="фото:{{fname}} {{lname}}">
+        {{else}}
+            <img class="block_photo__short" src="img/default.png" alt="default photo">
+        {{/if}}
+    </a>
+    <figcaption class="block_info__short">
+        <header>
+            <h3 class="block_header"> {{fname}} <span class="first_letter__red">{{lname}}</span></h3>
+            <span class="block_info__city">{{city}}</span>
+        </header>
+        <a href="#{{role}}/read/{{id}}/" class="block_link_text block_link_text__read" title="подробнее">подробнее...</a>
+        {{#if socnetwork }}
+            <ul class="block_links">
+                {{#each socnetwork}}
+                    {{#each this}}
+                        {{#if this}}
+                            <li class="block_link"><a class="block_link_icon block_link_icon__{{@key}}" href="{{this}}" title="{{this}}"></a></li>
+                        {{/if}}
+                    {{/each}}
+                {{/each}}
+            </ul>
+        {{/if}}
+    </figcaption>
+</figure>
