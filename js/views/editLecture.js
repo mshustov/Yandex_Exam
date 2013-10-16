@@ -25,7 +25,7 @@ define(["backbone","handlebars","underscore","lib/form2js","common","templates"]
                 var id = this.model.get('lector');
                 var renderData = this.template($.extend({},this.model.toJSON(),this.lectors[id],{lectors:this.lectors}));
                 this.$el.html(renderData);
-                this.$el.find('select[name="lector"]').val(this.model.get('lector'));
+                this.$el.find('select[name="lector"]').val(id);
                 return this;
             },
             close:function () {
@@ -44,10 +44,11 @@ define(["backbone","handlebars","underscore","lib/form2js","common","templates"]
                 }
             },
             onFocus:function(e){
-                $(e.target).closest('.block_edit').addClass('block_edit__focused');
+                this.blockEdit = $(e.target).closest('.block_edit');
+                this.blockEdit.addClass('block_edit__focused');
             },
             onBlur:function(e){
-                $(e.target).closest('.block_edit').removeClass('block_edit__focused');
+                this.blockEdit.removeClass('block_edit__focused');
                 var newVal = $.trim( $(e.target).val() );
                 $(e.target).val(newVal);
             },
