@@ -37,6 +37,14 @@ body {
 ::-ms-clear {
   display: none; }
 
+.search {
+  float: right;
+  margin: 14px 25px;
+  padding-left: 22px;
+  border: 1px solid #f0f0ed;
+  background: url("img/icon-search2.png") 2% 50% no-repeat;
+  outline: none; }
+
 .menu {
   margin: 0 auto 25px;
   background: #ffffff;
@@ -55,11 +63,10 @@ body {
   padding: 15px 25px;
   color: gray;
   font-size: 18px;
-  text-align: center;
-  text-decoration: none; }
+  text-align: center; }
 
 .main_menu_item__active {
-  text-decoration: underline; }
+  text-decoration: none; }
 
 .modal_popup {
   position: fixed;
@@ -265,7 +272,8 @@ body {
   display: block;
   margin: 10px 0;
   line-height: 20px;
-  color: #333; }
+  color: #333;
+  font-size: .9em; }
   .block_link_text__read:hover {
     color: gray;
     text-decoration: none; }
