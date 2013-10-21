@@ -8,8 +8,15 @@ define('common',["jquery","underscore","backbone"],
                 ENTER: 13
             },
             cacheObj:{},
+            saveObj:function(selector){
+                if (selector && $(selector)){
+                    this.cacheObj[selector]= $(selector);
+                }
+                return this
+            },
             //объект для проверки класса роутов Person
             validPersonClass:function(route){
+                if (!route){route = this.getRoot()}
                 var enable={
                     "students":"",
                     "lectors":""
@@ -17,10 +24,9 @@ define('common',["jquery","underscore","backbone"],
                 return typeof enable[route]!=="undefined"
             },
             //объект для проверки доступных роутов
-            validRoute:function(route){
+            validLecture:function(route){
+                if (!route){route = this.getRoot()}
                 var enable={
-                    "students":"",
-                    "lectors":"",
                     "lectures":""
                 }
                 return typeof enable[route]!=="undefined"
@@ -34,6 +40,7 @@ define('common',["jquery","underscore","backbone"],
             hideModal:function(){
                 this.cacheObj['#modal'].addClass('hide').off('.detailed');
                 $(document).off('.detailed');
+                Backbone.history.navigate(this.getRoot()+'/', true);
                 return this
             },
             showModal:function(content){
@@ -45,28 +52,19 @@ define('common',["jquery","underscore","backbone"],
                     //скрываем модальное окно по клику вне popup окна
                     if ( e.target!=self.cacheObj['#modal'][0]){return}
                     self.hideModal();
-                    Backbone.history.navigate(self.getRoot()+'/', true);
+                    // Backbone.history.navigate(self.getRoot()+'/', true);
                 });
                 $(document).on('keydown.detailed', function(e){
                     //скрываем модальное окно по ESC или BACKSPACE
                     if (e.keyCode!=self.Key.ESCAPE && e.keyCode!=self.Key.BACKSPACE){return}
                     self.hideModal();
-                    Backbone.history.navigate(self.getRoot()+'/', true);
+                   // Backbone.history.navigate(self.getRoot()+'/', true);
                 });
                 return this
             },
-            showFormError:function(errobj){
-                var self = this;
-                $.each(errobj.validationError,function(key,value){
-                    self.$el.find("[name='" +key+"']")
-                        .siblings('.block_edit_message').removeClass('hide').text(value)
-                        .off()
-                        .closest('.block_edit').addClass('block_edit__error')
-                });
-            },
             showActTab:function(){
                 var route = this.getRoot();
-                if (this.validRoute(route)){
+                if (this.validPersonClass(route) || this.validLecture(route)){
                     var urlNew = '/new/';
                     this.cacheObj['.add_new'].prop('href','#'+route+urlNew).removeClass('hide');
                     this.cacheObj['.main_menu_item__link'].removeClass('main_menu_item__active').filter('.'+route).addClass('main_menu_item__active')
@@ -77,9 +75,8 @@ define('common',["jquery","underscore","backbone"],
             initialize:function(){
                 this.vent.on('showModal',this.showModal,this);
                 this.vent.on('hideModal',this.hideModal,this);
-                this.cacheObj['.add_new']=$('.add_new');
-                this.cacheObj['.main_menu_item__link']=$('.main_menu_item__link');
-                this.cacheObj['#modal']=$('#modal');
+                this.saveObj('.add_new').saveObj('.main_menu_item__link').saveObj('#modal').saveObj('.search');
+                console.log(this.cacheObj);
             }
         };
         common.initialize();
