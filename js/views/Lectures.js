@@ -7,20 +7,25 @@ define(["jquery","backbone","views/Lecture"],
 
             initialize:function(attrs){
                 this.collection.on('add',this.addOne,this);
+                this.collection.on('lectures:filerData', this.render,this);
                 this.lectors = attrs.lectors;
             },
 
-            render:function(){
-                var fragment = document.createDocumentFragment();
-                this.collection.each(function(lecture){
-                    var oneLectureView = new LectureView({
-                        model:lecture,
-                        lectors:this.lectors
-                    })
-                    fragment.appendChild(oneLectureView.render().el);
-                },this);
-
-                this.$el.append(fragment);
+            render:function(data){
+                //рендерится только определенная роль (lectures)
+                var rendData = data || this.collection.models,
+                    fragment = document.createDocumentFragment(),
+                    self=this;
+                $.each(rendData,function(index,value){
+                    if (value.get('role')===self.role){
+                        var oneLectureView = new LectureView({
+                            model:value,
+                            lectors:self.lectors
+                        })
+                        fragment.appendChild(oneLectureView.render().el);
+                    }
+                });
+                this.$el.html(fragment);
                 return this
             },
 

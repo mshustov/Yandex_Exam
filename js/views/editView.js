@@ -1,4 +1,4 @@
-define(["backbone","handlebars","underscore","lib/form2js","common","templates"],
+define(["backbone","handlebars","underscore","lib/form2js","common", ],
     function(Backbone,Handlebars,_,form2js,common,tmpl) {
         "use strict";
         return Backbone.View.extend({

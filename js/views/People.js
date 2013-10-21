@@ -4,25 +4,26 @@ define(["backbone","views/PersonShort"],
         return Backbone.View.extend({
             tagName:'section',
             className:'content',
+            cache:{},
 
             initialize:function(attrs){
                 this.collection.on('add',this.addOne,this);
+                this.collection.on('people:filerData', this.render,this);
                 this.role=attrs.role;
             },
 
-            render:function(){
+            render:function(data){
                 //рендерится только определенная роль (students,lectors)
-                var fragment = document.createDocumentFragment();
-                this.collection.each(function(person){
-                    if (person.get('role')===this.role){
-                        var onePersonView = new PersonView({
-                            model:person
-                        })
-                        fragment.appendChild(onePersonView.render().el);
+                var rendData = data || this.collection.models,
+                    fragment = document.createDocumentFragment(),
+                    self=this;
+                $.each(rendData,function(index,value){
+                    if (value.get('role')===self.role){
+                        var personView = new PersonView({ model:value});
+                        fragment.appendChild(personView.render().el);
                     }
-                },this);
-
-                this.$el.append(fragment);
+                });
+                this.$el.html(fragment);
                 return this
             },
 

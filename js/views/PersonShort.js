@@ -13,9 +13,14 @@ define(["backbone","jquery","handlebars","underscore","common","templates"],
             initialize:function(){
                 this.model.on('destroy',this.unrender,this);
                 this.model.on('sync',this.render,this);
+                $('.block_short',this.$el).on('mouseenter',this.onMouseenter);
+                $('.block_short',this.$el).on('mouseleave',this.onMouseleave)
             },
             render: function() {
+                this.delegateEvents();
+
                 this.$el.html( this.template( this.model.toJSON() ));
+                this.delegateEvents();
                 return this;
             },
             unrender: function(){

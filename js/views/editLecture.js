@@ -1,25 +1,15 @@
-define(["backbone","handlebars","underscore","lib/form2js","common","templates"],
-    function(Backbone,Handlebars,_,form2js,common,tmpl) {
+define(["views/editView","templates"],
+    function(EditView,tmpl) {
         "use strict";
-        return Backbone.View.extend({
-            tagName: 'section',
-            className: 'popup',
+        return EditView.extend({
             template:tmpl['lectureEdit'],
-            events:{
-                "click .block_link_icon__close" :"onClose",
-                "click .block_link_icon__save"  :"onSave",
-                "keydown .block_edit_input"     :"onKeyDown",
-                "focus .block_edit_input"       :"onFocus",
-                "blur .block_edit_input"        :"onBlur"
-            },
             initialize:function(attrs){
                 this.model.on('destroy',this.onClose,this);
                 this.model.on('sync',this.render,this);
-                this.model.on('invalid',common.showFormError,this);
+                this.model.on('invalid',this.showFormError,this);
 
                 this.lectors =attrs.lectors;
             },
-
             render: function() {
                 //по id получаем данные о лекторе из переданного массива lectors
                 var id = this.model.get('lector');
@@ -27,35 +17,6 @@ define(["backbone","handlebars","underscore","lib/form2js","common","templates"]
                 this.$el.html(renderData);
                 this.$el.find('select[name="lector"]').val(id);
                 return this;
-            },
-            close:function () {
-                $(this.el).unbind();
-                $(this.el).empty();
-            },
-            onClose:function(){
-                this.close();
-                common.vent.trigger('hideModal');
-                return false;
-            },
-            onKeyDown:function(e){
-                //остановим всплытие событий при вводе в input, чтобы отменить переход
-                if (e.keyCode === common.Key.BACKSPACE || e.keyCode === common.Key.ESCAPE ){
-                    e.stopPropagation();
-                }
-            },
-            onFocus:function(e){
-                this.blockEdit = $(e.target).closest('.block_edit');
-                this.blockEdit.addClass('block_edit__focused');
-            },
-            onBlur:function(e){
-                this.blockEdit.removeClass('block_edit__focused');
-                var newVal = $.trim( $(e.target).val() );
-                $(e.target).val(newVal);
-            },
-            onSave:function(e){
-                var formData = form2js('editLecture', '.', false);
-                this.model.save(formData);
-                return false
             }
         });
 });
